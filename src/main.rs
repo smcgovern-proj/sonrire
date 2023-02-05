@@ -1,25 +1,16 @@
-use std::env;
-use std::fs;
+use std::{ env, process };
+use sonya::Config;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let files = parse_args(&args);
-    let contents = fs::read_to_string(files.file1)
-        .expect("unable to read file");
-}
-struct Files {
-    file1: String,
-    file2: String
-}
 
-impl Files {
-    fn new(args: &[String]) {
+    let cfg = Config::build(&args).unwrap_or_else(|err| {
+        println!("error parsing arguments, {}", err);
+        process::exit(1);
+    });
 
+    if let Err(e) = sonya::run(cfg) {
+        print!("Application error: {e}");
+        process::exit(1);
     }
-}
-
-fn parse_args(args: &[String]) -> Files {
-    let file1 = args[1].clone();
-    let file2 = args[2].clone();
-    Files { file1, file2 }
 }
