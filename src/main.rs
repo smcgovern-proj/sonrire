@@ -1,8 +1,9 @@
+use clap::Parser;
 use std::{ env, process };
 use sonya::Config;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let args: Vec<String> = Inputs.parse();
 
     let cfg = Config::build(&args).unwrap_or_else(|err| {
         println!("error parsing arguments, {}", err);
@@ -10,7 +11,12 @@ fn main() {
     });
 
     if let Err(e) = sonya::run(cfg) {
-        print!("Application error: {e}");
+        println!("Application error: {e}");
         process::exit(1);
     }
+}
+
+#[derive(Parser)]
+struct Inputs {
+    path: std::path::PathBuf
 }
