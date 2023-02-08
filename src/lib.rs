@@ -25,7 +25,7 @@ pub fn run (cfg: Config) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn validate(json: &str) -> bool {
+pub fn validate(json: &str) -> bool {
     let res:Result<Value, Serde_Error> = serde_json::from_str(json);
     if let Err(_) = res {
         return false;
