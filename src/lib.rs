@@ -8,10 +8,10 @@ pub struct Config {
 
 impl Config {
     pub fn build(args: &[String]) -> Result<Config, &'static str> {
-        if args.len() < 2 {
+        if args.len() < 1 {
             return Err("not enough arguments");
         }
-        let file1 = args[1].clone();
+        let file1 = args[0].clone();
         Ok(Config { file1 })
     }
 }

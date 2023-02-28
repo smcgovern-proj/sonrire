@@ -1,9 +1,10 @@
 use clap::Parser;
-use std::{ env, process };
+use std::{ process };
 use sonya::Config;
 
 fn main() {
-    let args: Vec<String> = Inputs.parse();
+    let args: Inputs = Inputs::parse();
+    let args: Vec<String> = vec![args.path];
 
     let cfg = Config::build(&args).unwrap_or_else(|err| {
         println!("error parsing arguments, {}", err);
@@ -18,5 +19,5 @@ fn main() {
 
 #[derive(Parser)]
 struct Inputs {
-    path: std::path::PathBuf
+    path: String
 }
